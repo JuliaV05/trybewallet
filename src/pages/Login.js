@@ -22,15 +22,19 @@ class Login extends React.Component {
   };
 
   handleSubmit = (event) => {
+    const { email } = this.state;
     event.preventDefault();
-    const { dispatch } = this.props;
-    dispatch(addEmail(this.state));
+    const { dispatch, history } = this.props;
+    dispatch(addEmail(email));
+    history.push('/carteira');
+    console.log(this.props);
   };
 
   buttonInput = () => {
     const { password, email } = this.state;
+    const emailRegex = /\S+@\S+\.\S+/;
     const number = 6;
-    if (password.length < number && email !== 'alguem@alguem.com') {
+    if (password.length < number || !emailRegex.test(email)) {
       this.setState({ buttonDisabled: true });
     } else {
       this.setState({ buttonDisabled: false });
@@ -78,7 +82,7 @@ class Login extends React.Component {
             type="submit"
             disabled={ buttonDisabled }
             className="button-login"
-            onClick={ this.buttonInput }
+            onClick={ this.handleSubmit }
           >
             <strong>Entrar</strong>
           </button>
@@ -90,4 +94,7 @@ class Login extends React.Component {
 export default connect()(Login);
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
