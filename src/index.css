@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login-page { 
+  text-align: center;
+  display: ce;
+}
+
+.email-input {
+  display: flexbox;
+  margin-top: 200px;
+  background-color: aqua;
+  width: 150px;
+  margin-left: 2px;
+}
+
+.password-input {
+  display: flexbox;
+  margin-top: 2px;
+  background-color: aqua;
+  width: 150px;
+}
+
+.button-login {
+  width: 154px;
+  margin-left: 45px;
+  background-color: green;
+}
