@@ -27,7 +27,6 @@ class Login extends React.Component {
     const { dispatch, history } = this.props;
     dispatch(addEmail(email));
     history.push('/carteira');
-    console.log(this.props);
   };
 
   buttonInput = () => {
