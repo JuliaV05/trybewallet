@@ -11,7 +11,7 @@ const user = (state = INITIAL_STATE, action) => {
   case ADD_EMAIL: {
     return {
       ...state,
-      email: action.payload,
+      email: action.payload.email,
     };
   }
   default: return state;
