@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrenciesApi } from '../redux/actions';
+import { saveExpensesForm } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -12,17 +12,39 @@ class WalletForm extends Component {
     method: 'Dinheiro',
   };
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchCurrenciesApi());
-  }
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  };
 
-  // handleChange = () => {
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const { expenses, dispatch } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const detailsExpenses = {
+      id: expenses.length,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    };
+    dispatch(saveExpensesForm(detailsExpenses));
+    this.handleInputClear();
+  };
 
-  // };
+  handleInputClear = () => {
+    this.setState({ value: '',
+      description: '',
+      tag: 'Alimentação',
+      currency: 'USD',
+      method: 'Dinheiro' });
+  };
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, expenses } = this.props;
     console.log(currencies);
     const mapCurr = currencies.map((cur, i) => (
       <option
@@ -36,32 +58,36 @@ class WalletForm extends Component {
     return (
       <div>
         <label
-          htmlFor="value-input"
+          htmlFor="value"
         >
           Valor:
           <input
             data-testid="value-input"
             type="number"
             name={ value }
+            placeholder="Insira o valor"
+            onChange={ this.handleChange }
+            id="value"
           />
         </label>
 
-        <label htmlFor="currency-input">
+        <label htmlFor="currency">
           Moeda:
           <select
             data-testid="currency-input"
             name={ currency }
+            id="currency"
           >
             { mapCurr }
           </select>
         </label>
 
-        <label htmlFor="methd">
+        <label htmlFor="method">
           Método de pagamento:
           <select
             data-testid="method-input"
             name={ method }
-            id="methd"
+            id="method"
           >
             <option defaultValue="Dinheiro">Dinheiro</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -69,11 +95,12 @@ class WalletForm extends Component {
           </select>
         </label>
 
-        <label htmlFor="tag-input">
+        <label htmlFor="tag">
           Categoria:
           <select
             data-testid="tag-input"
             name={ tag }
+            id="tag"
           >
             <option>Alimentação</option>
             <option>Lazer</option>
@@ -83,30 +110,41 @@ class WalletForm extends Component {
           </select>
         </label>
 
-        <label htmlFor="description-input">
+        <label htmlFor="description">
           Descrição:
           <select
             data-testid="description-input"
             name={ description }
+            id="description"
           >
-            {/* <option> </option> */}
             <option>Zaffari</option>
             <option>Restaurante Grelhatus</option>
             <option>Academia</option>
             <option>Shark Sushi</option>
           </select>
         </label>
+
+        <button
+          type="button"
+          value={ expenses }
+          onClick={ this.handleSubmit }
+        >
+          Adicionar despesa
+
+        </button>
       </div>
     );
   }
 }
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 WalletForm.propTypes = {
-  currencies: PropTypes.arrayOf(String).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);

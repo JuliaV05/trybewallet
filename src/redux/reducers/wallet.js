@@ -1,7 +1,8 @@
 import {
   FETCH_CURR_FAILURE,
-  FETCH_CURR_SUCCESS,
   FETCH_CURR_REQUEST,
+  SAVE_EXPENSES,
+  SELECT_COINS,
 } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
@@ -13,17 +14,17 @@ const INITIAL_STATE = {
   errorMessage: null,
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
+const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case FETCH_CURR_REQUEST: {
     return {
       ...state,
     };
   }
-  case FETCH_CURR_SUCCESS: {
+  case SELECT_COINS: {
     return {
       ...state,
-      currencies: action.payload.currencies,
+      currencies: action.payload,
     };
   }
   case FETCH_CURR_FAILURE: {
@@ -31,8 +32,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       errorMessage: action.payload.errorMessage,
     };
-  }
+  } case SAVE_EXPENSES: return {
+    ...state,
+    expenses: [...state.expenses, action.payload],
+  };
+
   default: return state;
   }
 };
-export default wallet;
+export default walletReducer;

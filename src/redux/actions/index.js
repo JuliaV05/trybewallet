@@ -1,7 +1,8 @@
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const FETCH_CURR_REQUEST = 'FETCH_CURR_REQUEST';
-export const FETCH_CURR_SUCCESS = 'FETCH_CURR_SUCCESS';
 export const FETCH_CURR_FAILURE = 'FETCH_CURR_FAILURE';
+export const SAVE_EXPENSES = 'SAVE_EXPENSES';
+export const SELECT_COINS = 'SELECT_COINS';
 
 export const addEmail = (email) => ({
   type: ADD_EMAIL,
@@ -15,18 +16,21 @@ const fetchCurrRequest = () => ({
   type: FETCH_CURR_REQUEST,
 });
 
-const fetchCurrSuccess = (currencies) => ({
-  type: FETCH_CURR_SUCCESS,
-  payload: {
-    currencies,
-  },
-});
-
 const fetchCurrFailure = (errorMessage) => ({
   type: FETCH_CURR_FAILURE,
   payload: {
     errorMessage,
   },
+});
+
+export const saveExpenses = (expenses) => ({
+  type: SAVE_EXPENSES,
+  payload: expenses,
+});
+
+export const selectCoins = (currencies) => ({
+  type: SELECT_COINS,
+  payload: currencies,
 });
 
 export const fetchCurrenciesApi = () => async (dispatch) => {
@@ -39,4 +43,11 @@ export const fetchCurrenciesApi = () => async (dispatch) => {
   } catch (error) {
     dispatch(fetchCurrFailure('Algo deu errado!'));
   }
+};
+
+export const saveExpensesForm = (info) => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
+  delete data.USDT;
+  dispatch(saveExpenses({ ...info, exchangeRates: data }));
 };

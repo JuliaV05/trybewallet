@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_EMAIL: {
     return {
@@ -18,4 +18,4 @@ const user = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default user;
+export default userReducer;
