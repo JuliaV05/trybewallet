@@ -3,6 +3,7 @@ import {
   FETCH_CURR_REQUEST,
   SAVE_EXPENSES,
   SELECT_COINS,
+  CLEAN_BUTTON,
 } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
@@ -36,6 +37,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     ...state,
     expenses: [...state.expenses, action.payload],
   };
+  case CLEAN_BUTTON: {
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => (expense.id !== action.payload)),
+    };
+  }
 
   default: return state;
   }

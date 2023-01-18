@@ -3,6 +3,7 @@ export const FETCH_CURR_REQUEST = 'FETCH_CURR_REQUEST';
 export const FETCH_CURR_FAILURE = 'FETCH_CURR_FAILURE';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 export const SELECT_COINS = 'SELECT_COINS';
+export const CLEAN_BUTTON = 'CLEAN_BUTTON';
 
 export const addEmail = (email) => ({
   type: ADD_EMAIL,
@@ -31,6 +32,11 @@ export const saveExpenses = (expenses) => ({
 export const selectCoins = (currencies) => ({
   type: SELECT_COINS,
   payload: currencies,
+});
+
+export const cleanButton = (id) => ({
+  type: CLEAN_BUTTON,
+  payload: id,
 });
 
 export const fetchCurrenciesApi = () => async (dispatch) => {
