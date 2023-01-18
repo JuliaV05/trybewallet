@@ -4,6 +4,8 @@ export const FETCH_CURR_FAILURE = 'FETCH_CURR_FAILURE';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 export const SELECT_COINS = 'SELECT_COINS';
 export const CLEAN_BUTTON = 'CLEAN_BUTTON';
+export const SAVE_EDIT_EXPENSE = 'SAVE_EDIT_EXPENSE';
+export const EDIT_EXPENSE = ' EDIT_EXPENSE';
 
 export const addEmail = (email) => ({
   type: ADD_EMAIL,
@@ -36,6 +38,16 @@ export const selectCoins = (currencies) => ({
 
 export const cleanButton = (id) => ({
   type: CLEAN_BUTTON,
+  payload: id,
+});
+
+export const saveEditExpense = (expense) => ({
+  type: SAVE_EDIT_EXPENSE,
+  payload: expense,
+});
+
+export const editExpense = (id) => ({
+  type: EDIT_EXPENSE,
   payload: id,
 });
 

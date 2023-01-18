@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { cleanButton } from '../redux/actions';
+import { cleanButton, editExpense } from '../redux/actions';
 
 class Table extends Component {
   render() {
@@ -37,6 +37,14 @@ class Table extends Component {
                 </td>
                 <td>Real</td>
                 <td>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => (dispatch(editExpense(expense.id))) }
+                  >
+                    Editar
+                  </button>
+
                   <button
                     type="button"
                     data-testid="delete-btn"
