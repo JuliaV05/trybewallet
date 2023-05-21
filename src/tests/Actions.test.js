@@ -6,7 +6,7 @@ const emailRegex = 'email@gmail.com';
 const password = '123456';
 
 describe('Actions wallet tests', () => {
-  it('testando caso de falha', () => {
+  it('testando casos', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     act(() => {
       history.push('/');
